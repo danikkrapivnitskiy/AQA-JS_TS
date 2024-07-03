@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age prompt</title>
+</head>
+<body>
+    <script>
+        const minAge = 18;
+        const maxAge = 60;
+
+        let age = prompt('Print the age');
+        if (!isNaN(age)) {
+            age = parseInt(age);
+        }
+        switch (true){
+            case age < minAge : {
+                alert('You dont have access cause your age is ' + age +'. Its less then ' + minAge);
+                break;
+            }
+            case age > maxAge:{
+                alert('Keep calm');
+                break;
+            }
+            case age >= minAge && age <= maxAge:{
+                alert('Welcome!');
+                break;
+            }
+            default: {
+                alert('Technical work');
+                break;
+        }
+    }
+    </script>
+</body>
+</html>
