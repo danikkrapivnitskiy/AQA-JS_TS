@@ -25,8 +25,8 @@
 
 console.log(result); //{ '1': 1, '2': 2, '3': 3, '4': 5 }
  */
-type Callback<T> = (value: T, index: number, arr: T[]) => T; 
-function map<T>(array: T[], callback: Callback<T>): T[] {
+type TCallback<T> = (value: T, index: number, arr: T[]) => T; 
+function map<T>(array: T[], callback: TCallback<T>): T[] {
   return array.map(function(currentValue, index) {
     return callback(currentValue, index, array);
   })
@@ -36,9 +36,9 @@ const array = [1,2,3,4,5];
 console.log(map(array, (num, index) => num * index));
 
 //2
-type KeyValuePairs<T> = [string, T][];
-type ObjectResult<T> = { [key: string]: T; }
-function generateObject<T>(pairs: KeyValuePairs<T>): ObjectResult<T> {
+type TKeyValuePairs<T> = [string, T][];
+type TObjectResult<T> = { [key: string]: T; }
+function generateObject<T>(pairs: TKeyValuePairs<T>): TObjectResult<T> {
     return Object.fromEntries(pairs);
 }
 

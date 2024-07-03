@@ -43,11 +43,11 @@
         protected abstract calculateSalary(): number;
     }
 
-    type Prefered = "scrum" | "kanban";
-    type ProgrammingLanguage = "JS" | "TS" | "Java" | "Python";
+    type TPrefered = "scrum" | "kanban";
+    type TProgrammingLanguage = "JS" | "TS" | "Java" | "Python";
 
     class Manager extends Employee {
-        constructor(name: string, surname: string, experienceYears: number, private agile: Prefered) {
+        constructor(name: string, surname: string, experienceYears: number, private agile: TPrefered) {
             super(name, surname, experienceYears);
         }
         getDetails() {
@@ -60,7 +60,7 @@
     }
 
     class Developer extends Employee {
-        constructor(name: string, surname: string, experienceYears: number, private language: ProgrammingLanguage) {
+        constructor(name: string, surname: string, experienceYears: number, private language: TProgrammingLanguage) {
             super(name, surname, experienceYears);
         }
         getDetails() {
