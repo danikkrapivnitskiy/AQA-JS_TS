@@ -27,11 +27,13 @@ console.log(result); //{ '1': 1, '2': 2, '3': 3, '4': 5 }
  */
 type Callback<T> = (value: T, index: number, arr: T[]) => T; 
 function map<T>(array: T[], callback: Callback<T>): T[] {
-    return array.map(callback);
+  return array.map(function(currentValue, index) {
+    return callback(currentValue, index, array);
+  })
 }
 
 const array = [1,2,3,4,5];
-console.log(map(array, (n) => array.indexOf(n) * n));
+console.log(map(array, (num, index) => num * index));
 
 //2
 type KeyValuePairs<T> = [string, T][];

@@ -36,13 +36,10 @@
     }
 
     abstract class Employee implements Person {
-
         constructor(public name: string, public surname: string, public experienceYears: number, public readonly salary: number = 0) {
             this.salary = this.calculateSalary();
         }
-
         abstract getDetails(): string;
-
         protected abstract calculateSalary(): number;
     }
 
