@@ -47,7 +47,7 @@
     type ProgrammingLanguage = "JS" | "TS" | "Java" | "Python";
 
     class Manager extends Employee {
-        constructor(name: string, public surname: string, public experienceYears: number, private agile: Prefered) {
+        constructor(name: string, surname: string, experienceYears: number, private agile: Prefered) {
             super(name, surname, experienceYears);
         }
         getDetails() {
@@ -60,7 +60,7 @@
     }
 
     class Developer extends Employee {
-        constructor(name: string, public surname: string, public experienceYears: number, private language: ProgrammingLanguage) {
+        constructor(name: string, surname: string, experienceYears: number, private language: ProgrammingLanguage) {
             super(name, surname, experienceYears);
         }
         getDetails() {
@@ -74,3 +74,5 @@
 
     const manager = new Manager("Elena", "TSovna", 6, "scrum");
     console.log(manager.getDetails())
+    const developer = new Developer("Artsyom", "TSonov", 12, "TS");
+    console.log(developer.getDetails())
