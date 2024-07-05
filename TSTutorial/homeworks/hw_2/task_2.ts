@@ -25,8 +25,8 @@
 
 console.log(result); //{ '1': 1, '2': 2, '3': 3, '4': 5 }
  */
-type TCallback<T> = (value: T, index: number, arr: T[]) => T; 
-function map<T>(array: T[], callback: TCallback<T>): T[] {
+type TCallback<T, U> = (value: T, index: number, arr: T[]) => U; 
+function map<T, U>(array: T[], callback: TCallback<T, U>): U[] {
   return array.map(function(currentValue, index) {
     return callback(currentValue, index, array);
   })
