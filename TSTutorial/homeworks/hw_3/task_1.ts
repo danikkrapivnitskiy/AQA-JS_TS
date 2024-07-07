@@ -32,4 +32,4 @@ type OmitInterface = Omit<IEmployee, "isManager">
 type ReadonlyInterface = Readonly<IEmployee>
 
 type Value = number | string | boolean
-type ArrayType = {[keys: string]: Value}
+type ArrayType = Record<string, Value>

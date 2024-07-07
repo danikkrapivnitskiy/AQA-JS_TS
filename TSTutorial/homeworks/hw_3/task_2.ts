@@ -32,8 +32,11 @@
         return this;
     }
 
-    update(id: number, item: T) {
-        this.storage[this.getById(id).id - 1] = item;
+    update(id: number, item: Partial<T>) {
+      const index = this.storage.findIndex(entity => entity.id === id);
+      if (index !== -1) {
+        this.storage[index] = { ...this.storage[index], ...item };
+      }
     }
 
     remove(id: number) {
@@ -68,7 +71,7 @@
     surname: "JSov",
   }
 
-  const ObjectWithoudId: Omit<ExtendedGeneric, "id"> = {
+  const ObjectWithoudId = {
     name: "TS",
     surname: "TSov",
   }
@@ -76,7 +79,7 @@
   const storage = new StorageClass<ExtendedGeneric>([ObjectWithId]);
   storage.add(ObjectWithoudId);
   console.log(storage.getAll()); // { id: 1, name: 'JSon', surname: 'TSov' }
-  storage.update(1, {id: 1, name: "JSon", surname: "JSov Updated"});
+  storage.update(1, {id: 1, surname: "JSov Updated"});
   console.log(storage.getAll());
   storage.remove(1);
   console.log(storage.getAll()); 
