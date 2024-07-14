@@ -3,7 +3,7 @@ import {CupSizeEnum, DoughTexturePizzaEnum, PizzaSizeEnum} from "./Enums";
 
 export abstract class Meal implements IMeal{
     abstract calculatePrice(): number
-    getMealInfo(): Object {
+    getMealInfo() {
         return {
             meal: this.constructor.name,
             details: this,
