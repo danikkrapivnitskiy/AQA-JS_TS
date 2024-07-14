@@ -20,16 +20,13 @@
     constructor(storage?: T[]) {
         if (storage) this.storage = storage.map(item => item as T);
     }
-    add(item: T): this;
-    add(item: Omit<T, "id">): this;
-    add(item: Omit<T, "id"> | T): this {
+    add(item: Omit<T, "id"> | T) {
         if ("id" in item) 
             this.storage.push(item as T) 
         else {
             const entity = {id : this.generateId(), ...item} as T;
             this.storage.push(entity);
         }
-        return this;
     }
 
     update(id: number, item: Partial<T>) {
