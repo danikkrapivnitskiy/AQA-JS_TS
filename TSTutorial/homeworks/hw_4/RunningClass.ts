@@ -1,7 +1,7 @@
 
 import { Coffee, Pizza } from "./Meals";
 import {CupSizeEnum, DoughTexturePizzaEnum, PaymentMethodEnum, PizzaSizeEnum} from "./Enums";
-import { Order } from "./Order";
+import Order from "./Order";
 import Pizzeria from "./Pizzeria";
 
 const coffee = new Coffee(CupSizeEnum.MEDIUM, 1)

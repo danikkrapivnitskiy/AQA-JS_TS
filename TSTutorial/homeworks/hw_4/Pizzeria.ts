@@ -1,5 +1,4 @@
-import { TOrder } from "./Types";
-import {OrderStatusEnum} from "./Enums";
+import { IOrder } from "./Types";
 import { OrderService } from "./OrderService";
 
 export default class Pizzeria {
@@ -9,30 +8,19 @@ export default class Pizzeria {
         this.orderService = new OrderService()
     }
 
-    addOrders(order: TOrder[]): void {
+    addOrders(order: IOrder[]): void {
         this.orderService.addOrder(order)
-        if (this.orderService.getOrderByStatus(OrderStatusEnum.PROCESSING) !== null
-            && this.orderService.getOrderByStatus(OrderStatusEnum.IN_PROGRESS) === null) {
-            this.orderService.setStatusToOrder(OrderStatusEnum.PROCESSING, OrderStatusEnum.IN_PROGRESS)
-        } else this.orderService.setStatusToOrder(OrderStatusEnum.PROCESSING, OrderStatusEnum.PENDING)
+        this.orderService.setStatusToAddedOrders();
     }
 
     prepareOrder(): void {
-        this.orderService.setStatusToOrder(OrderStatusEnum.IN_PROGRESS, OrderStatusEnum.COMPLETED)
-        if (this.orderService.getOrderByStatus(OrderStatusEnum.PROCESSING) !== null) {
-            this.orderService.setStatusToOrder(OrderStatusEnum.PROCESSING, OrderStatusEnum.IN_PROGRESS)
-        } else if (this.orderService.getOrderByStatus(OrderStatusEnum.PENDING) !== null) {
-            this.orderService.setStatusToOrder(OrderStatusEnum.PENDING, OrderStatusEnum.IN_PROGRESS)
-        }
+        this.orderService.setPreparedOrderStatusAndTakeInProgressAnother()
     }
 
     takeTheOrder() {
-        const order = this.orderService.getOrderByStatus(OrderStatusEnum.COMPLETED)
-        if (order === null) {
-            throw new Error(`No orders with status ${OrderStatusEnum.COMPLETED}`)
-        }
+        const order = this.orderService.getCompletedOrder()
         console.log(`Pay ${order.price} by ${order.paymentMethod} and take ${JSON.stringify(order.order)}. Thank you and come back soon!\n`)
-        this.orderService.setStatusToOrder(OrderStatusEnum.COMPLETED, OrderStatusEnum.DELIVERED)
+        this.orderService.setDeliveredStatusToCompletedOrder()
     }
 
     removeOrder(orderId: number): void {
@@ -43,7 +31,7 @@ export default class Pizzeria {
         return this.orderService.getTotalRevenue()
     }
 
-    getAllOrders(): TOrder[] {
+    getAllOrders(): IOrder[] {
         return this.orderService.getAllOrders()
     }
 }

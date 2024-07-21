@@ -1,19 +1,21 @@
-import {TOrder, IMeal} from "./Types"
+import {IOrder, IMeal} from "./Types"
 import {OrderStatusEnum, PaymentMethodEnum} from "./Enums";
 
-export class Order {
+export default class Order {
     private customerId: number = 0 
-    private orders: TOrder[] = [] 
+    private orders: IOrder[] = [] 
     private id: number = 1
-    private counter: number = 0
 
     makeOrder(customerName: string, meal: IMeal[] | IMeal, paymentMethod: PaymentMethodEnum) {
-        if (Array.isArray(meal)) {
-            this.counter = meal.length - 1;
-            meal.forEach(item => this.makeOrder(customerName, item, paymentMethod));
-            return;
-        }
+        if (Array.isArray(meal)) { 
+            meal.forEach(item => this.processMeal(customerName, item, paymentMethod));  
+        } else { 
+            this.processMeal(customerName, meal, paymentMethod)  
+        } 
+        console.log(`Order ${JSON.stringify(this.getOrderByCustomerIdOrName(customerName))} was added to bucket for ${customerName}\n`)
+    }
 
+    private processMeal(customerName: string, meal: IMeal, paymentMethod: PaymentMethodEnum) {
         this.createCustomerIdByName(customerName);
 
         if (!this.verifyIfCustomerExists(customerName) 
@@ -32,18 +34,18 @@ export class Order {
             this.getOrderByCustomerIdOrName(this.customerId)["price"] += meal.calculatePrice();
             this.getOrderByCustomerIdOrName(this.customerId)["order"].push(meal.getMealInfo());
         }
-        
-        if (--this.counter === -1) {
-            console.log(`Order ${JSON.stringify(this.orders[this.orders.length - 1])} was added to bucket for ${customerName}\n`)
-            this.counter = 0;
-        }
     }
 
-    getAllOrders(): TOrder[] {
+    getAllOrders(): IOrder[] {
         return this.orders;
     }
 
-    private getOrderByCustomerIdOrName(filter: string | number): TOrder {
+    updateOrder(orders: IOrder[]): void {
+        this.orders.splice(0, this.orders.length);
+        this.orders.push(...orders)  
+    }
+
+    private getOrderByCustomerIdOrName(filter: string | number): IOrder {
         const order = typeof filter === "string" 
         ? this.orders.find(entity => entity.customerName === filter) 
         : this.orders.find(entity => entity.customerId === filter) 

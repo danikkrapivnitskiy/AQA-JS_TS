@@ -1,10 +1,10 @@
 import { OrderStatusEnum, PaymentMethodEnum } from "./Enums"
 
-export type TOrder = {
+export interface IOrder {
     id: number;
     customerId: number;
     customerName: string;
-    order: Object[];
+    order: IOrderMealObject[];
     price: number;
     status: OrderStatusEnum;
     paymentMethod: PaymentMethodEnum;
@@ -12,5 +12,10 @@ export type TOrder = {
 
 export interface IMeal {
     calculatePrice(): number;
-    getMealInfo(): Object;
+    getMealInfo(): IOrderMealObject;
+}
+
+export interface IOrderMealObject {
+    meal: string,
+    details: Object,
 }
