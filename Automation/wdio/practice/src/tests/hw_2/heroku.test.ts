@@ -71,16 +71,13 @@ describe('Heroku application', () => {
         await waitForElementWithText(finishSelector, 'Hello World!', 20000)
     })
 
-    async function waitForElementWithText(selector: string, text: string, timeout: number) {
+    async function waitForElementWithText(selector: string, expectedText: string, timeout: number) {
         await browser.waitUntil(async () => {
             const element = await $(selector)
-            const isEnabled = await element.isEnabled();
-            if (isEnabled) {
-                await expect(element).toHaveText(text)
-            }
-            return isEnabled
+            const text = await element.getText()
+            return text === expectedText
         }, {
-            timeoutMsg: `Element with selector "${selector}" does not contain text "${text}" within ${timeout}ms`,
+            timeoutMsg: `Element with selector "${selector}" does not contain text "${expectedText}" within ${timeout}ms`,
             timeout,
             interval: 1000,
         });

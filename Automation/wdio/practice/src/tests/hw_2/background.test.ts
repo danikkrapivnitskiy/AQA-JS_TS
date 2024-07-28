@@ -43,36 +43,27 @@ describe('AQA course', () => {
        await passwordInput.setValue(password)
        await $(loginLocator).click()
 
-       await (await $(spinnerLocator)).waitForDisplayed({
-            timeoutMsg: 'Spinner is still present!',
-            timeout: 5000,
-            interval: 1000,
-            reverse: true
-        });
+       await waitSpinnerIsNotVisible();
 
        const user = await $(userId)
-       await user.waitForDisplayed({
-            timeoutMsg: 'User is logged!',
-            timeout: 5000,
-            interval: 1000,
-            reverse: false
-        });
         await expect(user).toHaveText('AQA User')
 
         const lefMenuBarElements = await $$(leftMenuBarLocator)
         for (let element of lefMenuBarElements) {
             await element.click()
-            await browser.waitUntil(async () => {
-                const color = await element.getCSSProperty('background-color')
-                return color.value !== 'rgba(0,0,0,0)'
-            }, {
-                timeoutMsg: `Element "${element.getAttribute}" wasn't clicked`,
-                timeout: 3000,
-                interval: 1000,
-            })
+            await waitSpinnerIsNotVisible();
             const color = await element.getCSSProperty('background-color')
             expect(color.value).not.toEqual('rgba(220,53,69,1)')
         }
     })
+
+    async function waitSpinnerIsNotVisible() {
+        await (await $(spinnerLocator)).waitForDisplayed({
+            timeoutMsg: 'Spinner is still present!',
+            timeout: 5000,
+            interval: 1000,
+            reverse: true
+        });
+    }
 })
 
