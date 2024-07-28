@@ -70,7 +70,6 @@ describe('Heroku application', () => {
         
         await waitForElementWithText(finishSelector, 'Hello World!', 20000)
     })
-
     async function waitForElementWithText(selector: string, expectedText: string, timeout: number) {
         await browser.waitUntil(async () => {
             const element = await $(selector)
