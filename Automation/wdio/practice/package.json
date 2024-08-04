@@ -2,6 +2,10 @@
   "name": "wdio-template",
   "type": "module",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@types/dotenv": "^8.2.0",
+    "@types/lodash": "^4.17.7",
+    "@types/rimraf": "^4.0.5",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "@wdio/allure-reporter": "^8.39.0",
@@ -9,6 +13,7 @@
     "@wdio/local-runner": "^8.39.1",
     "@wdio/mocha-framework": "^8.39.0",
     "@wdio/spec-reporter": "^8.39.0",
+    "allure-commandline": "^2.29.0",
     "eslint": "^8.57.0",
     "husky": "^9.1.1",
     "prettier": "^3.3.3",
@@ -16,11 +21,21 @@
     "typescript": "^5.5.4"
   },
   "scripts": {
-    "test": "wdio run ./wdio.conf.ts",
+    "test": "wdio run wdio.conf.ts",
+    "test:ui": "npm run test -- --suite ui",
+    "test:ui-products": "npm run test -- --suite ui_products",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --config .prettierrc src/**/*.ts --check",
     "prettier:fix": "prettier --config .prettierrc src/**/*.ts --write",
-    "prepare": "husky"
+    "prettify": "npm run lint:fix && npm run prettier:fix",
+    "prepare": "husky",
+    "report": "allure generate allure-results -o allure-report --clean",
+    "report-open": "npm run report && allure open allure-report"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "lodash": "^4.17.21",
+    "rimraf": "^6.0.1"
   }
 }

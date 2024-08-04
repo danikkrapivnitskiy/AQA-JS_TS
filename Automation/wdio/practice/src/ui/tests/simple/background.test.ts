@@ -56,6 +56,7 @@ describe('AQA course', () => {
             expect(color.value).not.toEqual('rgba(220,53,69,1)')
         }
     })
+
     async function waitSpinnerIsNotVisible() {
         await (await $(spinnerLocator)).waitForDisplayed({
             timeoutMsg: 'Spinner is still present!',

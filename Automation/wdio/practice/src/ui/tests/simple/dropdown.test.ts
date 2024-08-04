@@ -48,24 +48,12 @@ describe('Heroku app', () => {
     })
 
     async function selectDropdownValueWithKeys(dropdownSelector: string, optionsSelector: string, value: string) {
-        const dropdown = await $(dropdownSelector)
-        await dropdown.waitForClickable({
-            timeoutMsg: 'Dropdown is not exists in DOM! Make good selectors, noob!',
-          });
-        await dropdown.click()
+        await $(dropdownSelector).click()
         const options = await $$(optionsSelector)
-        await options[1].waitForExist({
-            timeoutMsg: 'No options exist in DOM! Make good selectors, noob!',
-          });
-
         const option: WebdriverIO.Element = await options.find(async o => await o.getText() === value)
         const index = options.indexOf(option)
-        for (let i = 0; i <= index; i++) {
-            await browser.keys(Key.ArrowDown)
-            i++
-        }
-        await browser.keys(Key.Enter)
-        const isSelected = await option.getProperty('selected');
-        expect(isSelected).toBe(true)
+        if (index === -1) throw new Error(`Unable to find dropdown element with text ${option}`);
+        const keys = Array(index).fill(Key.ArrowDown);
+        await browser.keys([...keys, Key.Enter]);
     }
 })
