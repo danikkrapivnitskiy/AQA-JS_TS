@@ -10,6 +10,7 @@ export class AddNewProductPage extends SalesPortalPage {
   private readonly 'Amount input' = '#inputAmount';
   private readonly 'Notes textarea' = '#textareaNotes';
   private readonly 'Save New Product button' = '#save-new-product';
+  private readonly 'Invalid input' = '.invalid-feedback'
 
   async fillInputs(product: Partial<IProduct>) {
     product.name && (await this.setValue(this['Name input'], product.name));
@@ -21,6 +22,10 @@ export class AddNewProductPage extends SalesPortalPage {
 
   async clickOnSaveButton() {
     await this.click(this['Save New Product button']);
+  }
+
+  async validateInputs() {
+    await !this.isDisplayed(this['Invalid input']) && expect(await this.isEnabled(this['Invalid input'])).toBe(false)
   }
 }
 

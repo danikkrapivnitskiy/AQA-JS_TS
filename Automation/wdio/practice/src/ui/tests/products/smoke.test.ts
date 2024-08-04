@@ -32,6 +32,7 @@ describe('[UI] [Products] Smoke', () => {
     const product = generateNewProduct();
     await addProductService.create(product);
     await productsService.checkProductInTable(product);
-    await (await actionsProductService.verifyProductDetails(product)).removeProduct(product)
+    await actionsProductService.verifyProductDetails(product)
+    await actionsProductService.removeProduct(product)
   });
 });

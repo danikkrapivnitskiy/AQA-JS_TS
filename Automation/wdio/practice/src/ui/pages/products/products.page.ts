@@ -27,8 +27,4 @@ export class ProductsPage extends SalesPortalPage {
   async clickOnProductAction<T extends IActionsProduct>(name: string, action: T) {
     return await action.clickOnAction(this['Actions by table row'](name))
   }
-
-  async closePopup() {
-    await this.verifyAndClosePopup('Product was successfully created')
-  }
 }

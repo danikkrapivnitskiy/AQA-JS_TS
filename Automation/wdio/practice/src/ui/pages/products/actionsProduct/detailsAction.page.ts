@@ -1,7 +1,7 @@
 import { IActionsProduct, ProductDetails } from "../../../../data/types/actions.types.js";
 import { SalesPortalPage } from "../../salesPortal.page.js";
 
-export class DetailsProduct extends SalesPortalPage implements IActionsProduct {
+export class DetailsProductModal extends SalesPortalPage implements IActionsProduct {
     readonly uniqueElement = '.strong-details';
     private readonly 'Details button' = '//button[@title="Details"]';
     private readonly 'Product detail'  = (fieldName: string) =>  `//div/strong[@class='strong-details' and text()='${fieldName}']/following-sibling::*`

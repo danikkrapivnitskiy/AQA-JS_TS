@@ -13,6 +13,7 @@ export class AddProductService {
   @logStep('Fill product inputs')
   async fillProductInputs(product: Partial<IProduct>) {
     await this.addNewProductPage.fillInputs(product);
+    await this.addNewProductPage.validateInputs()
   }
 
   @logStep('Save new product')
@@ -26,7 +27,11 @@ export class AddProductService {
     await this.save();
     await this.addNewProductPage.waitForSpinnerToHide();
     await this.productsPage.waitForOpened();
-    await this.productsPage.closePopup();
+    await this.verifyAndCloseNotification('Product was successfully created')
+  }
+
+  private async verifyAndCloseNotification(message: string) {
+    await this.productsPage.verifyAndClosePopup(message)
   }
 
 }

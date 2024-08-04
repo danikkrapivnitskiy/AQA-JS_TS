@@ -13,6 +13,16 @@ export abstract class BasePage {
     return element;
   }
 
+  protected async isDisplayed(locator: string) {
+    const element = await this.findElement(locator);
+    return await element.isDisplayed();
+  }
+
+  protected async isEnabled(locator: string) {
+    const element = await this.findElement(locator);
+    return await element.isEnabled();
+  }
+
   @logAction('Click on element with selector {selector}')
   protected async click(locator: string, timeout = TIMEOUT_5_SECS) {
     const element = await this.waitForElement(locator, timeout);
