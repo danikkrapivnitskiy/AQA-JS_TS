@@ -6,9 +6,21 @@ import { ProductsListService } from '../../services/products/products.service.js
 import { SignInService } from '../../services/signIn.service.js';
 import allure from '@wdio/allure-reporter';
 
+const testDataInvalid = [    
+  { name: 'a'.repeat(2)},
+  { name: 'a'.repeat(41)},   
+  
+];
+
+const testDataValid = [    
+  { name: 'a'.repeat(3)},
+  { name: 'a'.repeat(40)},    
+];
+
 describe('[UI] [Products] Smoke', () => {
   allure.addFeature('Products Creation Feature');
   allure.addSuite('[Products] Smoke');
+  let product = generateNewProduct();
   const signInService = new SignInService();
   const homeService = new HomeService();
   const addProductService = new AddProductService();
@@ -22,6 +34,9 @@ describe('[UI] [Products] Smoke', () => {
   });
 
   afterEach(async () => {
+    await browser.refresh()
+    await homeService.openProductsPage();
+    await actionsProductService.removeProduct(product)
     await signInService.signOut();
   });
 
@@ -29,10 +44,30 @@ describe('[UI] [Products] Smoke', () => {
     allure.addStory('Users creates product with valid data via ui');
     allure.addSeverity('blocker');
     await productsService.openAddNewProductPage();
-    const product = generateNewProduct();
     await addProductService.create(product);
     await productsService.checkProductInTable(product);
     await actionsProductService.verifyProductDetails(product)
-    await actionsProductService.removeProduct(product)
   });
+
+  testDataValid.forEach(({name}) => {
+    it('Positive validation creation product', async () => {
+      allure.addStory('Users creates product with valid data via ui');
+      allure.addSeverity('major');
+      await productsService.openAddNewProductPage();
+      product = generateNewProduct({name});
+      await addProductService.create(product);
+    })
+  })
+
+  testDataInvalid.forEach(({name}) => {
+    it.only('Negative validation creation product', async () => {
+      allure.addStory('Users creates product with invalid data via ui');
+      allure.addSeverity('major');
+      await productsService.openAddNewProductPage();
+      product = generateNewProduct({name});
+      await addProductService.fillProductInputs(product);
+      await addProductService.verifyMessageDataInvalid();
+    })
+  })
+
 });

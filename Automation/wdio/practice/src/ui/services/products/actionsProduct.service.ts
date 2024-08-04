@@ -14,6 +14,9 @@ export class ActionsProductService {
 
      @logStep('Remove the product')
      async removeProduct(product: IProduct) {
+      if (!await this.productPage.checkProductExists(product.name)) {
+         return
+      }
         await this.productPage.clickOnProductAction(product.name, this.deleteProductPage)
          .then(async page => {
             await page.clickOnSubmitDelete()

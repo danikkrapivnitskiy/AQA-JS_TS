@@ -23,6 +23,10 @@ export abstract class BasePage {
     return await element.isEnabled();
   }
 
+  protected async elementExists(locator: string) {
+    return await $(locator).isExisting();
+  }
+
   @logAction('Click on element with selector {selector}')
   protected async click(locator: string, timeout = TIMEOUT_5_SECS) {
     const element = await this.waitForElement(locator, timeout);
