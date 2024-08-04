@@ -1,5 +1,6 @@
 import { generateNewProduct } from '../../../data/products/generateProduct.js';
 import { HomeService } from '../../services/home.service.js';
+import { ActionsProductService } from '../../services/products/actionsProduct.service.js';
 import { AddProductService } from '../../services/products/addNewProduct.service.js';
 import { ProductsListService } from '../../services/products/products.service.js';
 import { SignInService } from '../../services/signIn.service.js';
@@ -12,6 +13,7 @@ describe('[UI] [Products] Smoke', () => {
   const homeService = new HomeService();
   const addProductService = new AddProductService();
   const productsService = new ProductsListService();
+  const actionsProductService = new ActionsProductService()
 
   beforeEach(async () => {
     await signInService.openSalesPortal();
@@ -30,5 +32,6 @@ describe('[UI] [Products] Smoke', () => {
     const product = generateNewProduct();
     await addProductService.create(product);
     await productsService.checkProductInTable(product);
+    await (await actionsProductService.verifyProductDetails(product)).removeProduct(product)
   });
 });
