@@ -24,8 +24,12 @@ export class AddNewProductPage extends SalesPortalPage {
     await this.click(this['Save New Product button']);
   }
 
-  async validateInputs() {
-    await !this.isDisplayed(this['Invalid input']) && expect(await this.isEnabled(this['Invalid input'])).toBe(false)
+  async invalidInputDisplayed() {
+    return await this.isDisplayed(this['Invalid input'])
+  }
+
+  async saveButtonEnabled() {
+    return await this.isEnabled(this['Save New Product button'])
   }
 }
 

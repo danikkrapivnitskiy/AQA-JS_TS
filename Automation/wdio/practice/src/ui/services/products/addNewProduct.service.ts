@@ -13,7 +13,11 @@ export class AddProductService {
   @logStep('Fill product inputs')
   async fillProductInputs(product: Partial<IProduct>) {
     await this.addNewProductPage.fillInputs(product);
-    await this.addNewProductPage.validateInputs()
+  }
+
+  @logStep('Error message displayed')
+  async verifyMessageDataInvalid() {
+    await this.addNewProductPage.invalidInputDisplayed() && expect(await this.addNewProductPage.saveButtonEnabled()).toBe(false)
   }
 
   @logStep('Save new product')

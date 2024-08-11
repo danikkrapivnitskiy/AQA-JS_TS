@@ -27,4 +27,8 @@ export class ProductsPage extends SalesPortalPage {
   async clickOnProductAction<T extends IActionsProduct>(name: string, action: T) {
     return await action.clickOnAction(this['Actions by table row'](name))
   }
+
+  async checkProductExists(name: string) {
+    return Object.keys(this.getDataByName(name)).length !== 0
+  }
 }
