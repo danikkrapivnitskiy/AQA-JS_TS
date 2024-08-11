@@ -24,7 +24,7 @@ export abstract class BasePage {
   }
 
   protected async elementExists(locator: string) {
-    return await $(locator).isExisting();
+    return await (await this.findElement(locator)).isExisting();
   }
 
   @logAction('Click on element with selector {selector}')
