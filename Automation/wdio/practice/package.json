@@ -3,6 +3,9 @@
   "type": "module",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@types/ajv": "^1.0.0",
+    "@types/axios": "^0.14.0",
+    "@types/chai": "^4.3.17",
     "@types/dotenv": "^8.2.0",
     "@types/lodash": "^4.17.7",
     "@types/rimraf": "^4.0.5",
@@ -24,6 +27,7 @@
     "test": "wdio run wdio.conf.ts",
     "test:ui": "npm run test -- --suite ui",
     "test:ui-products": "npm run test -- --suite ui_products",
+    "test:api": "npm run test -- --suite api",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --config .prettierrc src/**/*.ts --check",
@@ -34,6 +38,9 @@
     "report-open": "npm run report && allure open allure-report"
   },
   "dependencies": {
+    "ajv": "^8.17.1",
+    "axios": "^1.7.3",
+    "chai": "^5.1.1",
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
     "rimraf": "^6.0.1"
