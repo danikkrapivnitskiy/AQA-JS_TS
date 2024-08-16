@@ -2,6 +2,8 @@ import _ from 'lodash';
 import { ADMIN_USERNAME, ADMIN_PASSWORD } from '../../../config/environment.js';
 import { generateNewProduct } from '../../../data/products/generateProduct.js';
 import { IProduct } from '../../../data/types/product.types.js';
+import fetch from 'node-fetch'; 
+
 
 describe('[API] [Products] Smoke', () => {
   const baseUrl = 'https://aqa-course-project.app/';
@@ -26,7 +28,7 @@ describe('[API] [Products] Smoke', () => {
       body: JSON.stringify(credentials),
       headers: { 'Content-Type': 'application/json' },
       method: 'POST'
-    });
+    }) as any;
     expect(response.status).toBe(200);
     token = 'Bearer ' + (await response.json()).token;
   });

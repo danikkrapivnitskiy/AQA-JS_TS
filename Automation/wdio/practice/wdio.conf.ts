@@ -73,7 +73,7 @@ export const config: Options.Testrunner = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: ['--disable-search-engine-choice-screen']
+        args: ['--disable-search-engine-choice-screen', 'headless']
       }
     }
   ],
