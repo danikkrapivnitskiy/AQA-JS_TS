@@ -32,7 +32,6 @@ describe('[API] [Products] Validations', () => {
 
       const allProducts = await productClient.getAll(token);
       validateResponse(allProducts, STATUS_CODES.OK, true, null);
-      console.log(allProducts.body)
       validateSchema(allProducts, allProductsSchemas);
 
       const updatedProduct = {
@@ -47,9 +46,9 @@ describe('[API] [Products] Validations', () => {
       const responseUpdateBody = responseUpdate.body
       createdProduct = responseUpdateBody;
       validateResponse(responseUpdate, STATUS_CODES.OK, true, null);
+      validateSchema(responseUpdate, createdProductSchema);
       expect(responseUpdateBody.ErrorMessage).toBe(null);
       expect(responseUpdateBody.IsSuccess).toBe(true);
-      validateSchema(responseUpdate, createdProductSchema);
 
       const getUpdatedProductById = await productClient.getById(updatedProduct._id, token);
       validateResponse(getUpdatedProductById, STATUS_CODES.OK, true, null);
