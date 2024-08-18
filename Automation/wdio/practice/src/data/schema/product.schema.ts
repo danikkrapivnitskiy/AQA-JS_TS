@@ -41,3 +41,17 @@ export const createdProductSchema = {
   },
   required: ['Product', 'IsSuccess', 'ErrorMessage']
 };
+
+export const allProductsSchemas = {
+  type: 'object',
+  properties: {
+    Products: {
+      type: 'array',
+      items: createdProductSchema.properties.Product
+    },
+    IsSuccess: createdProductSchema.properties.IsSuccess,
+    ErrorMessage: createdProductSchema.properties.ErrorMessage,
+  },
+  required: ['Products', 'IsSuccess', 'ErrorMessage']
+
+}
