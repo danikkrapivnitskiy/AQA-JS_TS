@@ -36,7 +36,8 @@ export const config: Options.Testrunner = {
   //
   specs: [
     // ToDo: define location for spec files here
-    'src/**/*.test.ts'
+    'src/**/*.test.ts',
+    'src/**/*.feature'
   ],
   suites: {
     ui: ['./src/ui/tests/**/*.test.ts'],

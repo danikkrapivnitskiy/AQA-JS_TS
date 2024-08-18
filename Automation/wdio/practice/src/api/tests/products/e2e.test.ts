@@ -7,7 +7,7 @@ import signInService from "../../../services/signIn/signIn.service.js";
 import { validateResponse, validateSchema } from "../../../utils/validation/response.js";
 import { ProductsApiClient } from "../../clients/products.client.js";
 
-describe('[API] [Products] Validations', () => {
+describe('[API] [Products] CRUD Suite', () => {
     const productClient = new ProductsApiClient();
     let createdProduct: IProductResponse | null;
     let token = '';
@@ -23,17 +23,39 @@ describe('[API] [Products] Validations', () => {
       }
     });
   
-    it('CRUD test', async () => {
+    it('Create product', async () => {
       const body = generateNewProduct();
       const response = await productClient.create(body, token);
       const responseBody = response.body;
       createdProduct = responseBody;
       validateResponse(response, STATUS_CODES.CREATED, true, null);
+    });
 
+    it('Get product by id', async () => { 
+      const body = generateNewProduct();
+      const response = await productClient.create(body, token);
+      const responseBody = response.body;
+      createdProduct = responseBody;
+      const getProductById = await productClient.getById(responseBody.Product._id, token);
+      validateResponse(getProductById, STATUS_CODES.OK, true, null);
+      _.isEqual(getProductById, response)
+    });
+
+    it('Get all products', async () => { 
+      const body = generateNewProduct();
+      const response = await productClient.create(body, token);
+      const responseBody = response.body;
+      createdProduct = responseBody;
       const allProducts = await productClient.getAll(token);
       validateResponse(allProducts, STATUS_CODES.OK, true, null);
       validateSchema(allProducts, allProductsSchemas);
+    });
 
+    it('Update product', async () => { 
+      const body = generateNewProduct();
+      const response = await productClient.create(body, token);
+      const responseBody = response.body;
+      createdProduct = responseBody;
       const updatedProduct = {
         _id: createdProduct.Product._id,
         name: 'Updated Product',
@@ -49,10 +71,15 @@ describe('[API] [Products] Validations', () => {
       validateSchema(responseUpdate, createdProductSchema);
       expect(responseUpdateBody.ErrorMessage).toBe(null);
       expect(responseUpdateBody.IsSuccess).toBe(true);
+    });
 
-      const getUpdatedProductById = await productClient.getById(updatedProduct._id, token);
-      validateResponse(getUpdatedProductById, STATUS_CODES.OK, true, null);
-      _.isEqual(getUpdatedProductById, responseUpdate)
+    it('Delete product', async () => {
+      const body = generateNewProduct();
+      const response = await productClient.create(body, token);
+      const responseBody = response.body;
+      createdProduct = responseBody;
+      validateResponse(response, STATUS_CODES.CREATED, true, null);
+      await productClient.delete(createdProduct.Product._id, token);
     });
   });
   
